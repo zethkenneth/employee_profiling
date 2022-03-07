@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Employee;
+use App\Models\Department;
+use App\Models\Position;
 
 class EmployeeController extends Controller
 {
@@ -14,7 +17,8 @@ class EmployeeController extends Controller
     public function index()
     {
         //
-        return view('employees.index');
+        $data = employee::all();
+        return view('employees.index', ['employees' => $data]);
     }
 
     /**
@@ -25,6 +29,9 @@ class EmployeeController extends Controller
     public function create()
     {
         //
+        $datadepartment = department::all();
+        $dataposition = position::all();
+        return view('employees.create', ['departments' => $datadepartment,'positions' => $dataposition]);
     }
 
     /**
@@ -36,6 +43,17 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new Employee();
+       
+        $data->employee_lastname = request('employee_lastname');
+        $data->employee_firstname = request('employee_firstname');
+        $data->employee_middlename = request('employee_middlename');
+        $data->employee_extname = request('employee_extname');
+        $data->fk_department_id = request('department_id');
+        $data->fk_position_id = request('position_id');
+  
+        $data->save();
+        return redirect('/department')->with('mssg','Successfully Saved.');
     }
 
     /**

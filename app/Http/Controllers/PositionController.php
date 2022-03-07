@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Position;
+use Illuminate\Support\Facades\DB;
 
 class PositionController extends Controller
 {
@@ -14,7 +16,8 @@ class PositionController extends Controller
     public function index()
     {
         //
-        return view('positions.index');
+        $data = Position::all();
+        return view('positions.index', ['positions' => $data]);
     }
 
     /**
@@ -25,6 +28,7 @@ class PositionController extends Controller
     public function create()
     {
         //
+        return view('positions.create');
     }
 
     /**
@@ -36,6 +40,11 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new Position();
+        $data->position_name = request('position_name');
+
+        $data->save();
+        return redirect('/position')->with('mssg','Successfully Saved.');
     }
 
     /**
@@ -47,6 +56,7 @@ class PositionController extends Controller
     public function show($id)
     {
         //
+    
     }
 
     /**
@@ -58,6 +68,8 @@ class PositionController extends Controller
     public function edit($id)
     {
         //
+        $data = Position::find($id);
+        return view('positions.edit',['position' => $data]);
     }
 
     /**
@@ -67,9 +79,17 @@ class PositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        
+     $data = Position::find($request->position_id);
+  
+     $data->position_name = $request->position_name;
+
+     $data->save();
+
+     return redirect('/position')->with('mssg','Successfully Updated.');
     }
 
     /**
@@ -81,5 +101,9 @@ class PositionController extends Controller
     public function destroy($id)
     {
         //
+        $data = Position::find($id);
+        $data->delete();
+   
+        return redirect('/position')->with('mssg','Deleted.');
     }
 }

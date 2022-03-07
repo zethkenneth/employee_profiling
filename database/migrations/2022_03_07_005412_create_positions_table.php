@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        //  
-         Schema::create('positions', function($table) {
-            $table->increments('position_id');
+        Schema::create('positions', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('position_name');
         });
-
     }
 
     /**
@@ -28,7 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
         Schema::dropIfExists('positions');
     }
 };

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Department;
 
 class DepartmentController extends Controller
 {
@@ -14,7 +15,8 @@ class DepartmentController extends Controller
     public function index()
     {
         //
-        return view('departments.index');
+        $data = department::all();
+        return view('departments.index', ['departments' => $data]);
     }
 
     /**
@@ -25,6 +27,7 @@ class DepartmentController extends Controller
     public function create()
     {
         //
+        return view('departments.create');
     }
 
     /**
@@ -36,6 +39,11 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         //
+        $data = new department();
+        $data->department_name = request('department_name');
+
+        $data->save();
+        return redirect('/department')->with('mssg','Successfully Saved.');
     }
 
     /**
@@ -47,6 +55,7 @@ class DepartmentController extends Controller
     public function show($id)
     {
         //
+    
     }
 
     /**
@@ -58,6 +67,8 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         //
+        $data = department::find($id);
+        return view('departments.edit',['department' => $data]);
     }
 
     /**
@@ -67,9 +78,17 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        
+     $data = department::find($request->id);
+  
+     $data->department_name = $request->department_name;
+
+     $data->save();
+
+     return redirect('/department')->with('mssg','Successfully Updated.');
     }
 
     /**
@@ -81,5 +100,9 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         //
+        $data = department::find($id);
+        $data->delete();
+   
+        return redirect('/department')->with('mssg','Deleted.');
     }
 }

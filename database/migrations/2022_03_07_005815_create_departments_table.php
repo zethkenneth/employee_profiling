@@ -13,20 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        //
-        // Schema::create('departments', function($table) {
-        //     $table->increments('employee_id');
-        //     $table->string('employee_lastname');
-        //     $table->string('employee_firstname');
-        //     $table->string('employee_middlename');
-        //     $table->string('employee_extname');
-        // });
-
-        Schema::create('departments', function($table) {
-            $table->increments('department_id');
+        Schema::create('departments', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('department_name');
         });
-
     }
 
     /**
@@ -36,7 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
         Schema::dropIfExists('departments');
     }
 };
