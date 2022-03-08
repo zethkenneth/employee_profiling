@@ -16,8 +16,13 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        
+        // $data = employee::join('departments','departments.department_id', '=', 'employees.fk_department_id')
+        //                 ->join('positions','positions.position_id', '=', 'employees.fk_position_id')
+        //                 ->get();
+
         $data = employee::all();
+
         return view('employees.index', ['employees' => $data]);
     }
 
@@ -31,7 +36,10 @@ class EmployeeController extends Controller
         //
         $datadepartment = department::all();
         $dataposition = position::all();
-        return view('employees.create', ['departments' => $datadepartment,'positions' => $dataposition]);
+        return view('employees.create', [
+            'departments' => $datadepartment,
+            'positions' => $dataposition
+        ]);
     }
 
     /**
@@ -53,7 +61,7 @@ class EmployeeController extends Controller
         $data->fk_position_id = request('position_id');
   
         $data->save();
-        return redirect('/department')->with('mssg','Successfully Saved.');
+        return redirect('/employee')->with('mssg','Successfully Saved.');
     }
 
     /**
@@ -76,7 +84,16 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         //
-    }
+        $data = Employee::find($id);
+        $datadepartment = department::all();
+        $dataposition = position::all();
+
+        return view('employees.edit',[
+            'employee' => $data,
+            'departments' => $datadepartment,
+            'positions' => $dataposition
+        ]);
+    }   
 
     /**
      * Update the specified resource in storage.
@@ -85,9 +102,22 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $data = employee::find($request->employee_id);
+      
+        $data->employee_lastname = $request->employee_lastname;
+        $data->employee_firstname = $request->employee_firstname;
+        $data->employee_middlename = $request->employee_middlename;
+        $data->employee_extname = $request->employee_extname;
+        $data->fk_department_id = $request->department_id;
+        $data->fk_position_id = $request->position_id;
+
+   
+        $data->save();
+   
+        return redirect('/employee')->with('mssg','Successfully Updated.');
     }
 
     /**
@@ -99,5 +129,9 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
+        $data = employee::find($id);
+        $data->delete();
+   
+        return redirect('/employee')->with('mssg','Deleted.');
     }
 }

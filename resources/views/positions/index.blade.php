@@ -13,7 +13,7 @@
             <table class="table table-bordered table-striped" id="positions_list">
                 <thead>
                     <tr>
-                        <th width="25%">id</th>
+                        <th width="25%">position_id</th>
                         <th width="25%">Position_name</th>
                         <th width="25%">Action</th>
                     </tr>
@@ -21,12 +21,12 @@
                 <tbody>
                     @foreach($positions as $position)
                     <tr>
-                        <td>{{$position->id}}</td>
+                        <td>{{$position->position_id}}</td>
                         <td>{{$position->position_name}}</td>
                         <td>
-                            <a href="/position/{{$position->id}}" class="edit btn btn-primary btn-sm">Edit</a>
+                            <a href="/position/{{$position->position_id}}" class="edit btn btn-primary btn-sm">Edit</a>
                             &nbsp;&nbsp;
-                            <a href="/position/delete/{{$position->id}}" class="delete btn btn-danger btn-sm">Delete</a>
+                            <a href="/position/delete/{{$position->position_id}}" class="delete btn btn-danger btn-sm">Delete</a>
                         </td>
                     </tr >
                     @endforeach

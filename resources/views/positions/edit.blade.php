@@ -8,7 +8,7 @@
                 <div class="card-body">
                   <form action="/position/update" method="POST">
                   @csrf 
-                    <input type="hidden" name="position_id" value="{{$position->id}}">
+                    <input type="hidden" name="position_id" value="{{$position->position_id}}">
                     <div class="form-group row">
                       <label for="position_name" class="col-md-4 col-form-label text-md-right">Input Position Name:</label>
                       <div class="col-md-6">

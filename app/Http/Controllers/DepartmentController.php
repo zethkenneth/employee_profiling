@@ -82,7 +82,7 @@ class DepartmentController extends Controller
     {
         //
         
-     $data = department::find($request->id);
+     $data = department::find($request->department_id);
   
      $data->department_name = $request->department_name;
 

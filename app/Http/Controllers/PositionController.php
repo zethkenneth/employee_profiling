@@ -40,10 +40,13 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         //
-        $data = new Position();
-        $data->position_name = request('position_name');
+        // $data = new Position();
+        // $data->position_name = request('position_name');
+        // $data->save();
 
-        $data->save();
+        $data = Position::create([
+            'position_name' => $request->input('position_name')
+        ]);
         return redirect('/position')->with('mssg','Successfully Saved.');
     }
 
